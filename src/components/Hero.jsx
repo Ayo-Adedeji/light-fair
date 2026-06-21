@@ -142,6 +142,8 @@ function HeroSlideshow({ reduced }) {
             <div className="flex-1 overflow-hidden">
               <img src={top} alt="" className="w-full h-full object-cover object-center" loading="eager" />
             </div>
+            {/* Seam blender */}
+            <div className="h-16 shrink-0 bg-gradient-to-b from-transparent via-[#0e0e0e]/60 to-transparent -my-8 relative z-10 pointer-events-none" />
             <div className="flex-1 overflow-hidden">
               <img src={bottom} alt="" className="w-full h-full object-cover object-center" loading="eager" />
             </div>
@@ -211,7 +213,7 @@ export default function Hero() {
       </div>
 
       {/* Hero content */}
-      <div className="relative z-20 w-full max-w-4xl mx-auto px-4 sm:px-6 text-center pt-28 pb-16">
+      <div className="relative z-20 w-full max-w-4xl mx-auto px-4 sm:px-6 text-center pt-56 sm:pt-28 pb-16">
 
         {/* Date badge — distinct from countdown */}
         <motion.div
