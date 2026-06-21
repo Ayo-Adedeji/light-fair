@@ -104,8 +104,8 @@ export default function Speakers() {
               </div>
 
               {/* Info below photo */}
-              <div>
-                <div className="flex items-baseline gap-2 mb-0.5">
+              <div className="text-center">
+                <div className="flex items-baseline gap-2 mb-0.5 justify-center">
                   <h3
                     className="text-white leading-tight"
                     style={{
