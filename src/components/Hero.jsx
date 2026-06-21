@@ -6,6 +6,10 @@ import hero1 from '../assets/hero1.jpeg'
 import hero2 from '../assets/hero2.jpeg'
 import hero3 from '../assets/hero3.jpeg'
 import hero4 from '../assets/hero4.jpeg'
+import hero5 from '../assets/hero5.jpeg'
+import hero6 from '../assets/hero6.jpeg'
+import hero7 from '../assets/hero7.jpeg'
+import hero8 from '../assets/hero8.jpeg'
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(false)
@@ -19,8 +23,16 @@ function useReducedMotion() {
   return reduced
 }
 
-// Hero images — all 4 cycle in a crossfade
+// Hero images — desktop single full-screen
 const HERO_IMAGES = [hero1, hero2, hero3, hero4]
+
+// Mobile paired images — two stacked per slide (4 slides)
+const MOBILE_PAIRS = [
+  [hero1, hero2],
+  [hero3, hero4],
+  [hero5, hero6],
+  [hero7, hero8],
+]
 
 // Countdown target: Saturday July 18 2026 11:00 AM (WAT = UTC+1)
 const EVENT_DATE = new Date('2026-07-18T10:00:00Z')
@@ -87,28 +99,55 @@ function HeroSlideshow({ reduced }) {
     return () => clearInterval(id)
   }, [reduced])
 
+  const mobileIndex = index % MOBILE_PAIRS.length
+  const [top, bottom] = MOBILE_PAIRS[mobileIndex]
+
   return (
     <div className="absolute inset-0">
-      <AnimatePresence mode="sync">
-        <motion.div
-          key={index}
-          className="absolute inset-0"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.4, ease: 'easeInOut' }}
-        >
-          <motion.img
-            src={HERO_IMAGES[index]}
-            alt=""
-            className="w-full h-full object-cover"
-            loading={index === 0 ? 'eager' : 'lazy'}
-            initial={{ scale: 1.05 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 6, ease: 'linear' }}
-          />
-        </motion.div>
-      </AnimatePresence>
+      {/* Desktop: single full-screen crossfade */}
+      <div className="hidden sm:block absolute inset-0">
+        <AnimatePresence mode="sync">
+          <motion.div
+            key={index}
+            className="absolute inset-0"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.4, ease: 'easeInOut' }}
+          >
+            <motion.img
+              src={HERO_IMAGES[index]}
+              alt=""
+              className="w-full h-full object-cover object-top sm:object-center"
+              loading={index === 0 ? 'eager' : 'lazy'}
+              initial={{ scale: 1.05 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 6, ease: 'linear' }}
+            />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Mobile: two stacked landscape images */}
+      <div className="sm:hidden absolute inset-0 flex flex-col">
+        <AnimatePresence mode="sync">
+          <motion.div
+            key={`m-${mobileIndex}`}
+            className="absolute inset-0 flex flex-col"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.4, ease: 'easeInOut' }}
+          >
+            <div className="flex-1 overflow-hidden">
+              <img src={top} alt="" className="w-full h-full object-cover object-center" loading="eager" />
+            </div>
+            <div className="flex-1 overflow-hidden">
+              <img src={bottom} alt="" className="w-full h-full object-cover object-center" loading="eager" />
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
     </div>
   )
 }
@@ -258,18 +297,18 @@ export default function Hero() {
         transition={{ duration: 0.6, delay: 0.3 }}
         className="relative z-20 w-full max-w-lg mx-auto px-4 pb-4"
       >
-        <div className="flex items-center justify-center gap-2.5">
-          <div className="h-px flex-1 bg-white/10" />
-          <div className="flex items-center gap-2">
-            <img src={logoWhite} alt="LN Community" className="h-5 w-auto object-contain opacity-60" />
+        <div className="flex flex-col items-center gap-2 sm:flex-row sm:gap-2.5">
+          <div className="hidden sm:block h-px flex-1 bg-white/10" />
+          <div className="flex items-center gap-2 justify-center text-center">
+            <img src={logoWhite} alt="LN Community" className="h-5 w-auto object-contain opacity-60 shrink-0" />
             <span
-              className="text-white/45 text-[11px] tracking-widest uppercase"
+              className="text-white/45 text-[11px] tracking-widest uppercase text-center"
               style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
             >
               Hosted by The Tech Community, Light Nation, Ibadan
             </span>
           </div>
-          <div className="h-px flex-1 bg-white/10" />
+          <div className="hidden sm:block h-px flex-1 bg-white/10" />
         </div>
       </motion.div>
 
