@@ -1,6 +1,11 @@
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import ScrambleText from './ScrambleText'
+import logoWhite from '../assets/LN Community Logo.png'
+import hero1 from '../assets/hero1.jpeg'
+import hero2 from '../assets/hero2.jpeg'
+import hero3 from '../assets/hero3.jpeg'
+import hero4 from '../assets/hero4.jpeg'
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(false)
@@ -14,9 +19,8 @@ function useReducedMotion() {
   return reduced
 }
 
-// Tech event photography — warm, community-feeling
-const IMAGE_1 = 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80'
-const IMAGE_2 = 'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=1200&q=80'
+// Hero images — all 4 cycle in a crossfade
+const HERO_IMAGES = [hero1, hero2, hero3, hero4]
 
 // Countdown target: Saturday July 18 2026 11:00 AM (WAT = UTC+1)
 const EVENT_DATE = new Date('2026-07-18T10:00:00Z')
@@ -74,6 +78,40 @@ function CountdownSeparator() {
   )
 }
 
+function HeroSlideshow({ reduced }) {
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    if (reduced) return
+    const id = setInterval(() => setIndex(i => (i + 1) % HERO_IMAGES.length), 6000)
+    return () => clearInterval(id)
+  }, [reduced])
+
+  return (
+    <div className="absolute inset-0">
+      <AnimatePresence mode="sync">
+        <motion.div
+          key={index}
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.4, ease: 'easeInOut' }}
+        >
+          <motion.img
+            src={HERO_IMAGES[index]}
+            alt=""
+            className="w-full h-full object-cover"
+            loading={index === 0 ? 'eager' : 'lazy'}
+            initial={{ scale: 1.05 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 6, ease: 'linear' }}
+          />
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  )
+}
 function SlidePanel({ src, direction, reduced }) {
   if (reduced) {
     return (
@@ -129,8 +167,7 @@ export default function Hero() {
     <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#0e0e0e]">
       {/* Full-screen crossfading background images */}
       <div className="absolute inset-0">
-        <SlidePanel src={IMAGE_1} direction="left" reduced={reduced} />
-        <SlidePanel src={IMAGE_2} direction="right" reduced={reduced} />
+        <HeroSlideshow reduced={reduced} />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0e0e0e]/70 via-[#0e0e0e]/55 to-[#0e0e0e]/80 z-10" />
       </div>
 
@@ -213,6 +250,28 @@ export default function Hero() {
           </div>
         </motion.div>
       </div>
+
+      {/* Hosted by strip */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: subVisible ? 1 : 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="relative z-20 w-full max-w-lg mx-auto px-4 pb-4"
+      >
+        <div className="flex items-center justify-center gap-2.5">
+          <div className="h-px flex-1 bg-white/10" />
+          <div className="flex items-center gap-2">
+            <img src={logoWhite} alt="LN Community" className="h-5 w-auto object-contain opacity-60" />
+            <span
+              className="text-white/45 text-[11px] tracking-widest uppercase"
+              style={{ fontFamily: "'Inter', system-ui, sans-serif" }}
+            >
+              Hosted by The Tech Community, Light Nation, Ibadan
+            </span>
+          </div>
+          <div className="h-px flex-1 bg-white/10" />
+        </div>
+      </motion.div>
 
       {/* Countdown — separate distinct element below hero content */}
       <motion.div

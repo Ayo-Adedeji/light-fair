@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-// Logo assets — use light logo on dark/transparent bg, dark logo on scrolled cream bg
-import logoLight from '../assets/Logo-light.webp'
-import logoDark from '../assets/Logo-dark.webp'
+// LN Community Group logo — coloured version on scrolled bg, white version on dark/transparent bg
+import logoColoured from '../assets/LN Community Logo Coloured.png'
+import logoWhite from '../assets/LN Community Logo.png'
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false)
@@ -25,8 +25,8 @@ export default function Header() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         <a href="#" aria-label="The Unfair Advantage home" className="cursor-pointer">
           <img
-            src={scrolled ? logoDark : logoLight}
-            alt="Lightnation Tech Community"
+            src={scrolled ? logoColoured : logoWhite}
+            alt="LN Community"
             className="h-8 sm:h-9 w-auto object-contain transition-opacity duration-200"
           />
         </a>

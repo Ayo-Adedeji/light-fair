@@ -1,10 +1,11 @@
-﻿import logoLight from '../assets/Logo-light.webp'
+﻿import logoWhite from '../assets/LN Community Logo.png'
 
 const InstagramIcon = () => (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <radialGradient id="ig-g" cx="30%" cy="107%" r="150%">
         <stop offset="0%" stopColor="#fdf497" />
+        <stop offset="5%" stopColor="#fdf497" />
         <stop offset="45%" stopColor="#fd5949" />
         <stop offset="60%" stopColor="#d6249f" />
         <stop offset="90%" stopColor="#285AEB" />
@@ -35,25 +36,27 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-10 pb-12 border-b border-white/[0.08]">
           <div className="flex flex-col items-center sm:items-start gap-3">
-            <img src={logoLight} alt="Light Nation" className="h-8 w-auto object-contain opacity-90" />
-            <p className="text-white/35 text-sm text-center sm:text-left max-w-xs leading-relaxed" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
-              Organised by The Tech Community,{' '}
-              <br className="hidden sm:block" />
-              Light Nation, Ibadan
-            </p>
+            <img src={logoWhite} alt="LN Community" className="h-8 w-auto object-contain opacity-90" />
+            <div style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
+              <p className="text-white/55 text-sm text-center sm:text-left">
+                Hosted by <span className="text-white font-medium">The Tech Community</span>
+              </p>
+              <p className="text-white/35 text-xs text-center sm:text-left mt-0.5">
+                Light Nation, Ibadan
+              </p>
+            </div>
           </div>
-          <div className="flex items-center gap-2 mt-2">
-            {/* Replace href with actual Instagram link */}
-            <div className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center" aria-label="Instagram">
-              <InstagramIcon />
-            </div>
-            {/* Replace href with actual YouTube link */}
-            <div className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center" aria-label="YouTube">
-              <YouTubeIcon />
-            </div>
-            {/* Replace href with actual X/Twitter link */}
-            <div className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/50" aria-label="X / Twitter">
-              <XIcon />
+          <div className="flex flex-col items-center sm:items-end gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center" aria-label="Instagram">
+                <InstagramIcon />
+              </div>
+              <div className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center" aria-label="YouTube">
+                <YouTubeIcon />
+              </div>
+              <div className="w-9 h-9 rounded-full border border-white/10 flex items-center justify-center text-white/40" aria-label="X / Twitter">
+                <XIcon />
+              </div>
             </div>
           </div>
         </div>
